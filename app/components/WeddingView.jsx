@@ -178,7 +178,7 @@ export default function WeddingView() {
               </a>
               <a
                 className="tlink"
-                href="https://www.google.com/maps/dir/?api=1&destination=52-C+St.+No.+4+Daljit+Nagar+Near+Palm+Court+Hotel+Ferozpur+Road+Ludhiana"
+                href="https://maps.google.com/?q=30.888012,75.772102"
                 target="_blank"
                 rel="noopener"
               >
@@ -272,7 +272,7 @@ export default function WeddingView() {
               </a>
               <a
                 className="tlink"
-                href="https://www.google.com/maps/dir/?api=1&destination=52-C+St.+No.+4+Daljit+Nagar+Near+Palm+Court+Hotel+Ferozpur+Road+Ludhiana"
+                href="https://maps.google.com/?q=30.888012,75.772102"
                 target="_blank"
                 rel="noopener"
               >
@@ -315,7 +315,7 @@ export default function WeddingView() {
               </a>
               <a
                 className="tlink"
-                href="https://www.google.com/maps/dir/?api=1&destination=52-C+St.+No.+4+Daljit+Nagar+Near+Palm+Court+Hotel+Ferozpur+Road+Ludhiana"
+                href="https://maps.google.com/?q=30.888012,75.772102"
                 target="_blank"
                 rel="noopener"
               >
@@ -416,7 +416,7 @@ export default function WeddingView() {
             </p>
             <a
               className="btn"
-              href="https://www.google.com/maps/dir/?api=1&destination=52-C+St.+No.+4+Daljit+Nagar+Near+Palm+Court+Hotel+Ferozpur+Road+Ludhiana"
+              href="https://maps.google.com/?q=30.888012,75.772102"
               target="_blank"
               rel="noopener"
             >

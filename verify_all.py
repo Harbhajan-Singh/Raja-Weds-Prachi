@@ -42,6 +42,7 @@ test_url('/wedding', 'Wedding Page (/wedding)', 200, [
     'id="w-haldi"', '/v5/assets/bg/b2.webp',
     'id="w-wedding"', '/v5/assets/bg/b4.webp',
     'maps/dir/?api=1&amp;destination=',
+    '30.888012,75.772102',
     'Our Moments'
 ], forbidden_contents=forbidden_common)
 test_url('/sangeet', 'Sangeet Page (/sangeet)', 200, ['Ladies Sangeet', 'Raja', 'Prachi', '/v5/assets/bg/b1.webp'], forbidden_contents=['Your Blessing', 'id="register"'])
