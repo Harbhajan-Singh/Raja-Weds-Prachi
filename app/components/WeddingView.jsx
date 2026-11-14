@@ -475,6 +475,17 @@ export default function WeddingView() {
             <li>Tandon &amp; Arora Family</li>
           </ul>
         </div>
+        <p className="credit" style={{ margin: "44px auto 0", fontSize: "14px", letterSpacing: "0.06em", color: "var(--soft)", position: "relative", zIndex: 3 }}>
+          Design &amp; Developed By{" "}
+          <a
+            href="https://digitaldarzee.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--green)", textDecoration: "none", fontWeight: 700, whiteSpace: "nowrap" }}
+          >
+            Digital <span aria-hidden="true" style={{ color: "#D92B3A" }}>❤️</span> Darzee
+          </a>
+        </p>
         <img className="peacock l" src="/v5/assets/art/peacock.webp" alt="" />
         <img className="peacock r" src="/v5/assets/art/peacock.webp" alt="" />
       </footer>

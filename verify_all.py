@@ -33,7 +33,7 @@ def test_url(endpoint, desc, expected_status=200, check_contents=[], forbidden_c
 # 1. Routes and Content
 forbidden_common = ['Your Blessing', 'id="register"', 'Pheras', 'Timelessly Traditional', 'Dress code']
 
-test_url('/', 'Home Page (/)', 200, ['Raja', 'Prachi', 'Satsang', 'Engagement', 'Ladies Sangeet', 'Haldi', 'The Wedding', 'Our Moments'], forbidden_contents=forbidden_common)
+test_url('/', 'Home Page (/)', 200, ['Raja', 'Prachi', 'Satsang', 'Engagement', 'Ladies Sangeet', 'Haldi', 'The Wedding', 'Our Moments', 'Digital', 'digitaldarzee.com'], forbidden_contents=forbidden_common)
 test_url('/wedding', 'Wedding Page (/wedding)', 200, [
     'Raja', 'Prachi', 'Whistling Woods Resort', 'Daljit Nagar', 'Sehra Bandhi',
     'id="w-satsang"', '/v5/assets/bg/b1.webp',
@@ -43,9 +43,11 @@ test_url('/wedding', 'Wedding Page (/wedding)', 200, [
     'id="w-wedding"', '/v5/assets/bg/b4.webp',
     'maps/dir/?api=1&amp;destination=',
     '30.888012,75.772102',
-    'Our Moments'
+    'Our Moments',
+    'Digital',
+    'digitaldarzee.com'
 ], forbidden_contents=forbidden_common)
-test_url('/sangeet', 'Sangeet Page (/sangeet)', 200, ['Ladies Sangeet', 'Raja', 'Prachi', '/v5/assets/bg/b1.webp'], forbidden_contents=['Your Blessing', 'id="register"'])
+test_url('/sangeet', 'Sangeet Page (/sangeet)', 200, ['Ladies Sangeet', 'Raja', 'Prachi', '/v5/assets/bg/b1.webp', 'Digital', 'digitaldarzee.com'], forbidden_contents=['Your Blessing', 'id="register"'])
 
 # 2. Key Interactive Assets
 test_url('/v5/css/style.css', 'Stylesheet (style.css)', 200)
