@@ -1,0 +1,23 @@
+{
+  "name": "vaibhav-kiran-wedding-invitation",
+  "version": "1.0.0",
+  "description": "Vaibhav & Kiran Wedding Invitation Website",
+  "main": "server.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "keywords": [
+    "wedding",
+    "invitation",
+    "interactive"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "next": "^14.2.35",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

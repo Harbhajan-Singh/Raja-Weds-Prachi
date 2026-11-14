@@ -1,0 +1,532 @@
+/* Base reset */
+:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+
+/* Layout: Vaibhav's haveli journey (envelope, carved doors opening onto the courtyard, garden blessings, diya countdown,
+   evening Sangeet in the courtyard, Wedding at the mandap, venue, RSVP, moments, farewell), repainted in the invitation's
+   acrylic world: ivory paper, soft sage and gold, crimson-and-jasmine garlands strung through every scene (matched to the four event paintings), the card's calligraphy.
+   One deliberate light look. */
+:root{
+  --paper-img:url(/v5/assets/img/paper.webp);
+  --paper:#FAF6EF;
+  --ink:#3A3632;
+  --soft:#6E675F;
+  --green:#1D4535;
+  --gold:#B79B6C;
+  --gold-ink:#86703F;
+  --rule:#E5D8C2;
+  --nav:58px;
+  --serif:"Times New Roman",Tinos,Times,serif;
+  --deva:"Tiro Devanagari Hindi","Noto Serif Devanagari",serif;
+  --top:calc(var(--nav) + env(safe-area-inset-top,0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--paper) var(--paper-img,none) repeat; color:var(--ink); font-family:var(--serif); font-size:19px; line-height:1.55; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+body.locked{overflow:hidden}
+img{max-width:100%; display:block; height:auto}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold); outline-offset:3px; border-radius:3px}
+.gutter{padding-left:max(18px,env(safe-area-inset-left,0px)); padding-right:max(18px,env(safe-area-inset-right,0px))}
+.center{text-align:center}
+section{position:relative; scroll-margin-top:var(--nav)}
+.label{font-size:12.5px; letter-spacing:.28em; text-transform:uppercase; color:var(--gold-ink); margin:0}
+.heading{font-weight:400; color:var(--green); font-size:clamp(32px,4.4vw,48px); line-height:1.15; margin:10px 0 0; text-wrap:balance}
+.deva{font-family:var(--deva); color:var(--gold-ink); margin:0}
+.rule{display:flex; align-items:center; justify-content:center; gap:10px; margin:14px auto 0}
+.rule::before,.rule::after{content:""; width:74px; height:1px; background:linear-gradient(90deg,transparent,var(--gold))}
+.rule::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.rule i{width:6px; height:6px; transform:rotate(45deg); border:1px solid var(--gold)}
+.pre{opacity:0; transform:translateY(22px)}
+.rv{transition:opacity 1.1s ease, transform 1.1s ease}
+.wipe.pre{opacity:1; transform:none; clip-path:inset(0 100% 0 0)}
+.wipe.rv{transition:clip-path 1.9s cubic-bezier(.5,0,.2,1)}
+.wipe{clip-path:inset(0 0 0 0)}
+#petals{position:fixed; inset:0; pointer-events:none; z-index:70; width:100%; height:100%}
+
+/* garland strung across a scene; the wide band carries banana leaves at both ends */
+.garland{position:absolute; top:0; left:0; right:0; z-index:4; pointer-events:none; filter:drop-shadow(0 10px 8px rgba(60,40,20,.18))}
+.garland img{width:100%}
+.garland .n{display:none}
+.toran{position:absolute; top:0; left:0; right:0; height:clamp(110px,14vw,170px); background-repeat:repeat-x; background-size:auto 210%; background-position:center top; pointer-events:none; z-index:1;
+  -webkit-mask-image:linear-gradient(#000 55%,transparent); mask-image:linear-gradient(#000 55%,transparent); filter:drop-shadow(0 8px 6px rgba(60,40,20,.12))}
+@media (prefers-reduced-motion:no-preference){
+  .garland img,.toran{animation:sway 9s ease-in-out infinite alternate; transform-origin:50% 0}
+  @keyframes sway{from{transform:rotate(-.25deg)}to{transform:rotate(.25deg)}}
+}
+.btn{display:inline-block; font-family:var(--serif); font-size:12.5px; letter-spacing:.22em; text-transform:uppercase; text-decoration:none; color:#fff; background:var(--green); border:1px solid var(--green); border-radius:999px; padding:12px 26px; cursor:pointer}
+.btn:hover{background:#15342A}
+.tlink{font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--green); text-decoration:none; border-bottom:1px solid var(--gold); padding-bottom:3px}
+.tlink:hover{color:var(--gold-ink)}
+
+/* ---------- Envelope (Vaibhav's opening, step for step) ---------- */
+.gate{position:fixed; inset:0; z-index:60; background:var(--paper) var(--paper-img,none) repeat; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; text-align:center;
+  padding:max(20px,env(safe-area-inset-top,0px)) 20px max(20px,env(safe-area-inset-bottom,0px)); transition:opacity 1s ease; overflow:hidden; color:var(--ink)}
+.gate .garland{z-index:0}
+.gate>*:not(.garland){position:relative; z-index:1}
+.gate>*{flex-shrink:0}
+@media (max-width:760px){ .gate{gap:12px} .gate>.deva{margin-top:clamp(96px,30vw,130px)} .env{width:min(300px,76vw); margin-top:min(20vw,84px)} .thread{height:96px} }
+@media (max-height:720px){ .gate>.deva{margin-top:80px} .env{width:min(260px,66vw)} }
+.gate.done{opacity:0; pointer-events:none}
+.gate>.deva{font-size:19px; color:var(--gold-ink); margin-top:clamp(120px,17vw,250px)}
+.gate .sub{font-style:italic; color:var(--soft); margin:0}
+.env{position:relative; width:min(340px,78vw); aspect-ratio:340/230; margin-top:min(22vw,104px); filter:drop-shadow(0 26px 30px rgba(40,50,35,.28))}
+.env .liner{position:absolute; left:0; right:0; bottom:99%; height:52%; clip-path:polygon(0 100%,50% 0,100% 100%); background:linear-gradient(170deg,rgba(255,240,200,.25),rgba(255,240,200,0) 40%), linear-gradient(200deg,#F2D27A,#C9982F 55%,#A87A22); border:0}
+.env .liner::after{content:""; position:absolute; inset:0; clip-path:polygon(0 100%,50% 0,100% 100%); box-shadow:inset 0 0 0 2px rgba(235,210,140,.6)}
+.env .back{position:absolute; inset:0; background:#1F4F38; border-radius:2px}
+.vcardm{position:absolute; left:7%; right:7%; top:-14%; height:104%; background:#FBF6EC; z-index:1; display:flex; flex-direction:column; align-items:center; padding-top:5%; overflow:hidden; transition:transform 1.5s cubic-bezier(.45,0,.2,1); box-shadow:0 -2px 10px rgba(0,0,0,.15)}
+.vcardm::before{content:""; position:absolute; inset:5px; border:1px solid #C9A35B; pointer-events:none}
+.vcardm .deva{font-size:9px; color:#9C6B2E}
+.vcardm .tw{font-size:6.5px; letter-spacing:.3em; text-transform:uppercase; color:#A27B5A; margin:3px 0 0}
+.vcardm .nm{width:40%; margin:4px auto 0}
+.vcardm .nm.v{width:48%; margin-top:0}
+.vcardm .pt{position:absolute; width:16px; height:10px; border-radius:50% 0; background:linear-gradient(135deg,#F0A276,#D86D4E); opacity:.85}
+.env .front{position:absolute; inset:0; z-index:2; pointer-events:none}
+.env svg{width:100%; height:100%; display:block}
+.gate.opening .vcardm{transform:translateY(-70%)}
+.thread{position:relative; height:110px; width:60px; margin-top:-4px; touch-action:none}
+.thread i{position:absolute; left:50%; top:0; width:1.5px; height:58px; background:linear-gradient(#E8CF95,#C9A35B); transform:translateX(-50%)}
+.tassel{position:absolute; left:50%; top:52px; transform:translateX(-50%); width:30px; height:46px; border:0; background:none; padding:0; cursor:grab}
+.tassel svg{width:100%; height:100%}
+.gate .hint{font-size:11.5px; letter-spacing:.3em; text-transform:uppercase; color:var(--gold-ink); margin:0}
+.gate .acts{display:flex; gap:18px; align-items:center; transition:opacity .4s}
+.gate.opening .acts,.gate.opening .thread,.gate.opening .hint{opacity:0; transition:opacity .4s}
+.skip{background:none; border:0; font:inherit; font-size:16px; color:var(--soft); text-decoration:underline; text-underline-offset:3px; cursor:pointer}
+@media (prefers-reduced-motion:no-preference){ .tassel{animation:tug 2.8s ease-in-out infinite} @keyframes tug{0%,70%,100%{margin-top:0}80%{margin-top:9px}90%{margin-top:2px}} }
+
+/* ---------- Nav ---------- */
+.bar{position:fixed; top:0; left:0; right:0; z-index:30; height:var(--top); padding-top:env(safe-area-inset-top,0px); background:rgba(250,246,239,.93); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid var(--rule)}
+.bar .in{height:var(--nav); max-width:1240px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:14px}
+.mono{line-height:0}
+.mono img{height:30px; width:auto}
+.bar nav{display:flex; gap:28px}
+.bar nav a{font-size:11.5px; letter-spacing:.24em; text-transform:uppercase; text-decoration:none; color:var(--green)}
+.bar nav a:hover{color:var(--gold-ink)}
+
+/* ---------- Hero: the doors open onto the courtyard ---------- */
+.hero{height:340vh; margin-top:var(--top)}
+.box{position:absolute; inset:0; overflow:hidden; will-change:transform,clip-path}
+.fwrap{position:absolute; inset:0; z-index:2; pointer-events:none; opacity:0}
+.frame{position:absolute; border:1px solid var(--gold); box-shadow:0 0 0 7px rgba(250,246,239,.92), 0 0 0 8px var(--gold), 0 40px 70px -30px rgba(70,35,15,.5)}
+.mantra,.sig{position:absolute; z-index:3; left:16px; right:16px; text-align:center; opacity:0; pointer-events:none}
+.mantra{top:2.5%}
+.mantra .om-top{font-size:clamp(34px,6.2vh,54px)}
+.mantra .shloka{font-size:clamp(14px,2.1vh,19px); margin-top:4px; line-height:1.6}
+.sig{bottom:2%}
+.sig .names{width:auto; height:clamp(44px,7.4vh,72px); max-width:92%; margin:0 auto}
+.sig .date{margin-top:6px}
+.halo .deva{font-size:clamp(17px,1.8vw,21px)}
+.stage{position:sticky; top:var(--top); height:calc(100vh - var(--top)); overflow:hidden; background:var(--paper)}
+.court{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(1.14); transform-origin:50% 62%}
+.walk{position:absolute; left:50%; bottom:5%; height:min(58%,600px); z-index:1; transform:translate(-50%,30px) scale(.9); transform-origin:50% 100%; opacity:0}
+.walk img{height:100%; width:auto; max-width:none; position:relative; z-index:1}
+.walk::before{content:""; position:absolute; left:12%; right:8%; bottom:-2%; height:9%; border-radius:50%; background:radial-gradient(ellipse at center, rgba(70,45,20,.35), transparent 70%)}
+.door{position:absolute; top:0; bottom:0; width:50%; overflow:hidden; z-index:2; will-change:transform}
+.door.l{left:0; box-shadow:inset -18px 0 26px -20px rgba(40,30,15,.45)}
+.door.r{right:0}
+.door img{position:absolute; top:0; height:100%; width:200%; max-width:none; object-fit:cover}
+.door.l img{left:0}.door.r img{right:0}
+.halo{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; z-index:3; padding:18vh 16px 0; pointer-events:none}
+.halo::before{content:""; position:absolute; left:50%; top:56%; width:min(980px,120vw); height:min(560px,70vh); transform:translate(-50%,-50%); background:radial-gradient(ellipse at center, rgba(250,246,239,.78) 0%, rgba(250,246,239,.55) 40%, rgba(250,246,239,0) 72%); filter:blur(8px); z-index:-1}
+.halo .deva{font-size:clamp(16px,1.8vw,20px)}
+.om-top{font-family:var(--deva); color:var(--gold-ink); font-size:clamp(38px,4.2vw,52px); line-height:1; margin:0}
+.shloka{font-family:var(--deva); color:var(--gold-ink); font-size:clamp(13.5px,1.4vw,17px); line-height:1.75; margin:8px 0 0}
+.om-top{font-family:var(--deva); color:var(--gold-ink); font-size:clamp(40px,4.4vw,54px); line-height:1; margin:0}
+.shloka{font-family:var(--deva); color:var(--gold-ink); font-size:clamp(14px,1.45vw,17px); line-height:1.75; margin:8px 0 0}
+.halo .names{width:min(720px,88%); margin:12px auto 0}
+.halo .date{margin-top:18px}
+.cue{margin-top:20px; font-size:11.5px; letter-spacing:.3em; text-transform:uppercase; color:var(--gold-ink); display:flex; flex-direction:column; align-items:center; gap:8px}
+.cue::after{content:""; width:1px; height:30px; background:var(--gold)}
+.after{position:absolute; left:0; right:0; top:22%; z-index:3; text-align:center; padding:0 16px; opacity:0; pointer-events:none}
+.after p{display:inline-block; margin:0; padding:10px 26px; font-size:clamp(19px,2.1vw,25px); line-height:1.35; color:var(--ink); background:radial-gradient(ellipse at center, rgba(250,246,239,.92) 40%, rgba(250,246,239,0) 72%); max-width:30em}
+.stage-fade{position:absolute; left:0; right:0; bottom:0; height:22%; z-index:3; background:linear-gradient(transparent,var(--paper)); opacity:0}
+
+/* ---------- Blessings over the garden ---------- */
+.garden{clip-path:inset(0)}
+.garden-bg{position:sticky; top:var(--top); height:calc(100vh - var(--top)); margin-bottom:calc(-100vh + var(--top)); overflow:hidden}
+.garden-bg img{width:100%; height:100%; object-fit:cover}
+.garden-bg::after{content:""; position:absolute; inset:0; background:linear-gradient(var(--paper),rgba(250,246,239,.35) 22%,rgba(250,246,239,.25) 70%,var(--paper))}
+.garden-in{position:relative; z-index:1}
+.panel{min-height:calc(100vh - var(--top)); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding-block:80px; max-width:960px; margin:0 auto}
+.panel p{margin:0}
+.om{font-family:var(--deva); color:var(--gold-ink); font-size:50px; line-height:1}
+.big{font-size:clamp(30px,3.6vw,40px); color:var(--green); line-height:1.2; margin-top:4px !important}
+.gp{font-size:clamp(22px,2.4vw,27px); color:var(--ink)}
+.gp-amp{color:var(--gold); line-height:1.3}
+.note{font-style:italic; color:var(--soft)}
+.invite{font-size:clamp(20px,2.3vw,26px); line-height:1.35; max-width:26em; color:var(--ink)}
+.pair{display:grid; grid-template-columns:1fr auto 1fr; gap:26px; align-items:end; width:100%; margin-top:34px}
+.who{display:flex; align-items:flex-end; justify-content:center; height:clamp(120px,15vw,190px); margin:6px 0 10px}
+.who img{max-height:100%; width:auto}
+.who.v img{height:58%}
+.pair .of{font-size:clamp(17px,1.8vw,20px)}
+.pair .gd{font-size:clamp(15px,1.5vw,17px); font-style:italic; color:var(--soft); margin-top:4px !important}
+.pair{align-items:start}
+.pair .and{align-self:center}
+.pair .gd{font-size:clamp(15px,1.5vw,17px); font-style:italic; color:var(--soft); margin-top:4px !important}
+.pair{align-items:start}
+.pair .and{align-self:center}
+.pair .and{color:var(--gold); font-size:26px; padding-bottom:52px}
+.presence{font-style:italic; font-size:clamp(25px,3vw,34px); color:var(--green); margin-top:40px !important}
+
+/* ---------- Countdown ---------- */
+.countdown{padding-block:100px 70px; text-align:center}
+.countdown>*:not(.toran):not(.cd-bg){position:relative; z-index:2}
+.countdown .diya{width:66px; margin:0 auto 10px; filter:drop-shadow(0 0 12px rgba(240,160,60,.35))}
+.tiles{display:grid; grid-template-columns:repeat(4,minmax(0,126px)); gap:16px; justify-content:center; margin-top:34px}
+.tile{background:rgba(255,255,255,.7); border:1px solid var(--gold); border-radius:63px 63px 8px 8px; padding:30px 4px 16px; position:relative}
+.tile::before{content:""; position:absolute; inset:4px; border:1px solid var(--rule); border-radius:59px 59px 5px 5px; pointer-events:none}
+.tile b{display:block; font-weight:400; font-size:clamp(36px,5vw,50px); line-height:1; color:var(--green); font-variant-numeric:lining-nums tabular-nums}
+.tile span{font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--soft)}
+.countdown .foot{font-style:italic; color:var(--soft); margin:24px 0 0}
+.join{margin-top:90px}
+
+/* ---------- Event scenes ---------- */
+.scene{position:relative; min-height:calc(100vh - var(--top)); overflow:hidden; display:flex; align-items:center}
+.scene>.bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.scene::after{content:""; position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(var(--paper),rgba(250,246,239,0) 20%,rgba(250,246,239,0) 82%,var(--paper))}
+.scene .garland{z-index:3; height:min(30vh,280px); overflow:hidden}
+.scene .garland img{height:100%; object-fit:cover; object-position:center top}
+.figure{position:absolute; bottom:5%; z-index:2; height:min(60%,560px)}
+.figure img{height:100%; width:auto; max-width:none; position:relative; z-index:1}
+.figure::before{content:""; position:absolute; left:10%; right:10%; bottom:-2%; height:8%; border-radius:50%; background:radial-gradient(ellipse at center, rgba(70,45,20,.32), transparent 70%)}
+.sangeet .figure{right:9%}
+.wedding .figure{left:50%; transform:translateX(-66%); height:min(64%,560px)}
+.wrap{position:relative; z-index:4; width:100%; max-width:1200px; margin:0 auto; display:flex; padding-block:120px 80px}
+.wedding .wrap{justify-content:flex-end}
+.card{width:min(430px,100%); background:rgba(252,249,243,.88); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:1px solid var(--gold); border-radius:14px 54px 14px 54px; padding:30px 32px 26px; text-align:center; position:relative; box-shadow:0 30px 60px -36px rgba(60,40,15,.5)}
+.card::before{content:""; position:absolute; inset:6px; border:1px solid var(--rule); border-radius:10px 48px 10px 48px; pointer-events:none}
+.card .title{width:100%; max-width:380px; margin:8px auto 2px}
+.card .line{display:inline-block; margin:8px 0 0; padding-bottom:8px; border-bottom:1px solid var(--gold); font-size:20px}
+.card .venue{margin:10px 0 0; font-weight:700; font-size:14.5px; letter-spacing:.07em; text-transform:uppercase}
+.card ul{list-style:none; padding:0; margin:14px auto 0; max-width:300px; text-align:left}
+.card li{display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--rule)}
+.card li b{font-weight:400; color:var(--green)}
+.card .dress{margin:14px 0 0; font-style:italic}
+.card .links{display:flex; justify-content:center; gap:22px; margin-top:16px}
+
+
+/* ---------- Event scenes: the painting fills the scene, its own colours bleeding to the edges, the card floats beside ---------- */
+.ev-scene{position:relative; overflow:hidden; min-height:calc(100vh - var(--top)); display:flex; align-items:center}
+.ev-scene>.wash{position:absolute; inset:-60px; width:calc(100% + 120px); height:calc(100% + 120px); max-width:none; object-fit:cover; filter:blur(28px) saturate(.95)}
+.ev-scene>.bgp{position:absolute; top:0; height:100%; width:auto; max-width:none; left:36%; transform:translateX(-50%); z-index:1;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent); mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent)}
+.ev-scene.flip>.bgp{left:64%}
+.ev-scene::before{content:""; position:absolute; inset:0; z-index:0; background:rgba(250,246,239,.32); pointer-events:none}
+.ev-scene::after{content:""; position:absolute; inset:0; z-index:2; pointer-events:none; background:linear-gradient(var(--paper),rgba(250,246,239,0) 16%,rgba(250,246,239,0) 84%,var(--paper))}
+.ev-scene .wrap{justify-content:flex-end}
+.ev-scene.flip .wrap{justify-content:flex-start}
+.ttl{font-family:"Pinyon Script",cursive; font-weight:400; color:var(--green); font-size:clamp(56px,6.4vw,78px); line-height:1.05; margin:6px 0 0; text-wrap:balance}
+.card .note2{margin:10px 0 0; font-style:italic; color:var(--soft); font-size:17px}
+@media (max-width:760px){
+  .ev-scene{display:block; min-height:0}
+  .ev-scene>.bgp,.ev-scene.flip>.bgp{position:relative; left:auto; transform:none; width:100%; height:auto; max-height:78vh; object-fit:cover; object-position:50% 40%;
+    -webkit-mask-image:linear-gradient(#000 72%,transparent); mask-image:linear-gradient(#000 72%,transparent)}
+  .ev-scene::after{background:linear-gradient(var(--paper),rgba(250,246,239,0) 8%)}
+  .ev-scene .wrap,.ev-scene.flip .wrap{justify-content:center; margin-top:-70px; padding:0 max(16px,env(safe-area-inset-left,0px)) 64px}
+  .ttl{font-size:58px}
+}
+
+/* countdown: the evening setup glowing behind the diyas */
+.countdown{overflow:hidden}
+.countdown>.cd-bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 70%; z-index:0}
+.countdown::after{content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(ellipse 50% 40% at 50% 34%, rgba(240,190,110,.16), rgba(240,190,110,0) 70%)}
+.countdown .tile{background:rgba(255,252,246,.86)}
+@media (max-width:760px){
+  .ev-in,.ev-scene.flip .ev-in{grid-template-columns:minmax(0,1fr); gap:0}
+  .ev-scene.flip .painting{order:0}
+  .painting{width:min(100%,420px)}
+  .ev-scene .card{margin-top:-46px}
+  .ev-scene .garland{height:min(24vw,120px)}
+  .ttl{font-size:60px}
+}
+
+/* ---------- Venue ---------- */
+.venue-s{padding-block:80px 100px; text-align:center}
+.vgrid{display:grid; grid-template-columns:repeat(2,minmax(0,420px)); justify-content:center; gap:clamp(24px,5vw,64px); margin-top:40px}
+.vcard{width:100%; margin:0 auto}
+.vcard .vev{margin:0 0 16px; font-size:16px; color:var(--green)}
+@media (max-width:760px){ .vgrid{grid-template-columns:minmax(0,400px)} }
+.vframe{padding:8px; border:1px solid var(--gold); border-radius:200px 200px 6px 6px; background:rgba(255,255,255,.6); position:relative}
+.vframe::before{content:""; position:absolute; inset:3px; border:1px solid var(--rule); border-radius:197px 197px 4px 4px; pointer-events:none}
+.vframe img{width:100%; aspect-ratio:4/3.6; object-fit:cover; border-radius:192px 192px 3px 3px}
+.vcard .d{margin:22px 0 0}
+.vcard h3{font-weight:400; color:var(--green); font-size:38px; line-height:1.2; margin:4px 0 0}
+.vcard .p{margin:0 0 18px; font-style:italic; color:var(--soft)}
+
+/* ---------- RSVP ---------- */
+.rsvp{padding-block:90px 100px; text-align:center}
+.rsvp>*:not(.toran){position:relative; z-index:2}
+.rsvp .due{font-style:italic; color:var(--soft); margin:8px 0 0}
+form{width:min(520px,100%); margin:34px auto 0; text-align:left; background:rgba(255,255,255,.75); border:1px solid var(--gold); border-radius:14px 54px 14px 54px; padding:32px 30px; display:flex; flex-direction:column; gap:18px; position:relative}
+form::before{content:""; position:absolute; inset:6px; border:1px solid var(--rule); border-radius:10px 48px 10px 48px; pointer-events:none}
+.field{display:flex; flex-direction:column; gap:6px; min-width:0; position:relative}
+label,.legend{font-size:11.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold-ink)}
+input[type=text],input[type=tel],textarea{font:inherit; font-size:19px; color:var(--ink); background:transparent; border:0; border-bottom:1px solid var(--rule); border-radius:0; padding:8px 2px; width:100%}
+input::placeholder,textarea::placeholder{color:#B4ABA0}
+input:focus,textarea:focus{outline:none; border-bottom-color:var(--gold)}
+textarea{min-height:70px; resize:vertical}
+.ev{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px solid var(--rule)}
+.ev strong{display:block; font-weight:400; font-size:20px; color:var(--green)}
+.ev small{font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--soft)}
+.yn{display:flex; gap:6px}
+.yn input{position:absolute; opacity:0; pointer-events:none}
+.yn label{color:var(--green); border:1px solid var(--gold); border-radius:999px; padding:5px 14px; cursor:pointer; background:#fff}
+.yn input:checked+label{background:var(--green); border-color:var(--green); color:#fff}
+.yn input:focus-visible+label{outline:2px solid var(--gold); outline-offset:2px}
+.stepper{display:flex; align-items:center; gap:12px}
+.stepper button{width:36px; height:36px; border-radius:50%; border:1px solid var(--gold); background:#fff; color:var(--green); font-size:20px; cursor:pointer; font-family:var(--serif)}
+.stepper output{font-size:26px; color:var(--green); min-width:24px; text-align:center}
+.err{color:#9B2E1A; margin:0; font-size:16px}
+.thanks{padding-top:30px}
+.thanks h3{font-weight:400; color:var(--green); font-size:40px; margin:0}
+.thanks p{margin:0; font-style:italic; color:var(--soft)}
+.help{margin-top:44px}
+.help ul{list-style:none; padding:0; margin:12px auto 0; display:flex; flex-wrap:wrap; justify-content:center; gap:6px 26px; max-width:560px; font-size:20px; color:var(--green)}
+
+/* ---------- Moments ---------- */
+.moments{padding-block:90px 110px; text-align:center}
+.moments .lead{font-style:italic; color:var(--soft); margin:14px auto 0; max-width:30em}
+.gallery{position:relative; max-width:1080px; margin:44px auto 0}
+.gallery .toran{height:clamp(110px,12vw,150px); background-size:auto 240%}
+.arches{position:relative; z-index:2; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(12px,2.4vw,30px)}
+.arch{position:relative; padding:9px; border-radius:999px 999px 8px 8px; background:linear-gradient(160deg,#F3DFA4,#C9A253 30%,#8E6A2C 52%,#E6C77E 74%,#A9823A); box-shadow:0 26px 40px -24px rgba(70,40,10,.55), inset 0 0 0 1px rgba(255,240,200,.5); margin-top:22px}
+.arch::before{content:""; position:absolute; left:50%; top:-20px; width:18px; height:26px; transform:translateX(-50%); background:linear-gradient(#F3DFA4,#B08436); clip-path:polygon(50% 0,78% 40%,64% 40%,64% 100%,36% 100%,36% 40%,22% 40%)}
+.arch::after{content:""; position:absolute; inset:5px; border-radius:999px 999px 5px 5px; border:1px solid rgba(255,244,214,.7); pointer-events:none}
+.arch img{border:3px solid #FBF4E4}
+.arch img{width:100%; aspect-ratio:343/519; object-fit:cover; object-position:50% 70%; border-radius:999px 999px 3px 3px}
+
+/* ---------- Farewell ---------- */
+footer{position:relative; overflow:hidden; text-align:center; min-height:calc(100vh - var(--top)); padding-top:clamp(90px,12vw,160px); padding-bottom:min(40vh,340px)}
+footer>*:not(.garland):not(.peacock){position:relative; z-index:2}
+footer .diya{width:72px; margin:0 auto}
+footer .deva{font-size:20px; margin-top:6px}
+footer .pres{font-style:italic; font-size:clamp(25px,3vw,34px); color:var(--green); margin:12px 0 0}
+footer .names{width:min(640px,88%); margin:18px auto 0}
+footer .d{margin:18px 0 0}
+.peacock{position:absolute; bottom:0; width:clamp(150px,22vw,300px); z-index:1; -webkit-mask-image:linear-gradient(#000 80%,transparent); mask-image:linear-gradient(#000 80%,transparent)}
+.peacock.l{left:2%}.peacock.r{right:2%}
+
+@media (max-width:760px){
+  body{font-size:18px}
+  .bar nav{gap:12px}
+  .bar nav a{font-size:9.5px; letter-spacing:.12em}
+  .mono img{height:24px}
+  .garland .w{display:none}.garland .n{display:block}
+  .halo{padding-top:16vh}
+  .walk{height:min(46%,420px)}
+  .pair{grid-template-columns:1fr; gap:4px}
+  .pair .and{padding:0}
+  .who{height:100px}
+  .tiles{grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
+  .tile{border-radius:40px 40px 6px 6px; padding:22px 2px 10px}
+  .tile::before{border-radius:36px 36px 4px 4px}
+  .tile span{font-size:8.5px; letter-spacing:.12em}
+  .scene{display:block; min-height:0; padding-left:0; padding-right:0}
+  .scene>.bg{position:relative; height:min(64vh,560px)}
+  .scene .garland{height:min(24vw,120px)}
+  .figure{bottom:auto; top:calc(min(64vh,560px) - 10px); transform:translateY(-100%); height:min(40vh,350px)}
+  .sangeet .figure{right:auto; left:50%; transform:translate(-50%,-100%)}
+  .wedding .figure{left:50%; transform:translate(-50%,-100%); height:min(38vh,330px)}
+  .scene::after{background:linear-gradient(var(--paper),rgba(250,246,239,0) 10%,rgba(250,246,239,0) 46%,var(--paper) 58%)}
+  .wrap{padding:0 max(16px,env(safe-area-inset-left,0px)) 60px; margin-top:-36px}
+  .wedding .wrap{justify-content:center}
+  .card{padding:24px 20px 22px}
+  .arches{grid-template-columns:repeat(2,minmax(0,1fr)); max-width:440px; margin:0 auto}
+  footer{padding-bottom:230px}
+  .peacock{width:36vw}
+}
+@media (max-width:420px){ .bar nav{gap:7px} .bar nav a{letter-spacing:.04em; font-size:9px} .mono img{height:20px} }
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .rv,.wipe.rv{transition:none} }
+
+
+/* =====================================================================
+   v5 additions: our envelope, doors and scenes inside Kiran's look
+   ===================================================================== */
+.script{font-family:"Pinyon Script",cursive;font-weight:400;line-height:1.1}
+.script i{font-style:normal}
+.mono .script{font-size:30px;color:var(--green);line-height:1}
+.mono .script i{color:var(--gold);padding:0 2px}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+
+/* envelope (Blender frames on a canvas, drag the knot) */
+.gate .env-stage{position:relative;width:min(78vw,420px,calc(36svh*.909));aspect-ratio:760/836;margin-top:6px}
+#envCanvas{width:100%;height:100%;display:block;filter:drop-shadow(0 22px 26px rgba(40,50,35,.28))}
+#knot{position:absolute;left:36%;top:54%;width:28%;height:24%;cursor:grab;touch-action:none;border-radius:50%;z-index:2}
+#knot::after{content:"";position:absolute;left:50%;top:44%;width:30%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;box-shadow:0 0 0 0 rgba(217,181,101,.6);animation:knotPulse 2.4s ease-out infinite}
+@keyframes knotPulse{0%{box-shadow:0 0 0 0 rgba(217,181,101,.55)}80%,100%{box-shadow:0 0 0 22px rgba(217,181,101,0)}}
+#knot:focus-visible{outline:2px solid var(--gold);outline-offset:6px}
+.gate.pulling #knot{cursor:grabbing}.gate.unwrapped #knot{pointer-events:none}.gate.unwrapped #knot::after{display:none}
+.env-loading{position:absolute;inset:0;display:grid;place-items:center;transition:opacity .5s}
+.env-loading span{width:30px;height:30px;border:2px solid rgba(183,155,108,.3);border-top-color:var(--gold-ink);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.env-stage.ready .env-loading{opacity:0;pointer-events:none}
+.gate.opening .acts,.gate.opening .hint{opacity:0;transition:opacity .4s}
+@media (max-width:760px){
+  .gate{gap:10px}
+  .gate>.deva{margin-top:clamp(70px,20vw,100px)}
+  .gate .env-stage{width:min(80vw,380px,calc(38svh*.909))}
+}
+@media (max-height:700px){.gate>.deva{margin-top:60px}}
+
+/* hero: our doors (two images), names in cream on the dark doors */
+.door img{position:absolute;top:0;left:0;right:auto;height:100%;width:100%;max-width:none;object-fit:cover}
+.door.r img{left:0;right:auto}
+.door.l{box-shadow:inset -18px 0 26px -20px rgba(0,0,0,.5)}
+.halo::before{background:radial-gradient(ellipse at center,rgba(4,24,15,.72) 0%,rgba(4,24,15,.45) 42%,rgba(4,24,15,0) 72%)}
+.halo .deva{color:#E8CF95}
+.halo .names{font-size:clamp(58px,10.5vw,128px);color:#FBF3E2;margin:10px 0 0;text-shadow:0 2px 18px rgba(0,0,0,.45)}
+.halo .names i{color:#E8CF95}
+.halo .label,.halo .cue{color:#E8CF95}
+.halo .cue::after{background:#E8CF95}
+.sig .names{font-size:clamp(46px,8vh,76px);color:var(--green);width:auto;height:auto;margin:0 auto}
+.sig .names i{color:var(--gold)}
+.court{object-position:50% 60%}
+.walk{bottom:6%;height:min(54%,560px)}
+.walk img{height:100%;width:auto;filter:drop-shadow(0 10px 14px rgba(0,0,0,.3))}
+.walk::before{display:none}
+
+/* blessings / names in script */
+.who{display:block;height:auto;margin:4px 0 8px}
+.who .script{display:inline-block;font-size:clamp(66px,8.4vw,96px);color:var(--green)}
+.pair .of{font-size:clamp(17px,1.8vw,20px)}
+.pair{align-items:start}
+.pair .and{padding-bottom:0;align-self:center}
+
+/* countdown end states */
+.countdown.ended .tiles{display:none}
+
+/* ev-scene (Kirtan, Haldi): Kiran's, with titles and links tuned */
+.card .venue{font-size:13.5px}
+.card .links{flex-wrap:wrap}
+.ttl{font-size:clamp(52px,5.6vw,72px)}
+.vscene .ttl{font-size:clamp(46px,5vw,62px)}
+
+/* vscene (Sangeet, Wedding): our painting, couple standing IN the scene, her card */
+.vscene{position:relative;overflow:hidden;--fx:50%;--zoom:1}
+.vscene.sangeet{--fx:76%;--zoom:1.3}
+.vscene.wedding{--fx:50%;--zoom:1.15}
+.vs-art{position:relative;height:clamp(300px,50svh,500px);overflow:hidden;-webkit-mask-image:linear-gradient(#000 80%,transparent);mask-image:linear-gradient(#000 80%,transparent)}
+.vs-art .bg{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:var(--fx) 100%;transform:scale(var(--zoom));transform-origin:var(--fx) 100%}
+.vs-art .couple{position:absolute;left:50%;bottom:22%;height:60%;width:auto;max-width:none;transform:translateX(calc(var(--ax,.5) * -100%));filter:drop-shadow(0 12px 16px rgba(0,0,0,.35));pointer-events:none}
+.vscene.wedding .vs-art .couple{bottom:0;height:56%}
+.vscene .wrap{margin-top:clamp(-70px,-11vw,-48px);padding:0 max(16px,env(safe-area-inset-left,0px)) 56px;justify-content:center}
+.vscene .card{width:min(500px,100%)}
+@media (min-width:1024px){
+  .vscene{min-height:min(100svh,820px);display:flex;align-items:center}
+  .vs-art{position:absolute;inset:0;height:auto;-webkit-mask-image:none;mask-image:none}
+  .vscene{--fx:50%;--zoom:1}
+  .vs-art .bg{object-position:50% 70%;transform:none}
+  .vscene::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(var(--paper),rgba(250,246,239,0) 12%,rgba(250,246,239,0) 88%,var(--paper))}
+  .vs-art .couple{display:none}
+  .vscene .wrap{margin-top:0;padding:100px 80px 100px clamp(48px,7vw,140px);justify-content:flex-start;max-width:none}
+  .vscene .card{width:clamp(340px,28vw,420px)}
+}
+@media (min-width:1100px){
+  .vs-art .couple{display:block;left:50%;bottom:24%;height:min(46%,410px)}
+  .vscene.wedding .vs-art .couple{bottom:0;height:min(52%,450px)}
+}
+
+/* venue arches */
+.vframe img{aspect-ratio:4/3.6}
+
+/* sound button */
+.sound{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:80;width:50px;height:50px;border-radius:50%;border:1px solid var(--gold);background:rgba(250,246,239,.92);color:var(--green);display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 22px rgba(60,40,15,.25);backdrop-filter:blur(6px)}
+.sound.on .mute{display:none}.sound.off .waves{display:none}
+.sound:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* v5 fixes */
+.sig .names{white-space:nowrap;font-size:clamp(40px,6.6vh,70px)}
+footer .names{font-size:clamp(56px,8vw,92px);color:var(--green);width:auto;margin:14px auto 0}
+footer .names i{color:var(--gold)}
+.vscene .ttl{font-size:clamp(40px,3.5vw,52px)}
+@media (max-width:760px){
+  .walk{height:min(44%,400px);bottom:7%}
+  .sig .names{font-size:40px}
+  .vscene .ttl{font-size:50px}
+}
+@media (min-width:761px){
+  .gate>.deva{margin-top:clamp(90px,10vw,140px)}
+  .gate .env-stage{width:min(78vw,460px,calc(42svh*.909))}
+}
+
+/* ===== v5 round 2: hero couple anchored to the courtyard image, crisper gold, HD frames and peacocks ===== */
+.box{container-type:size}
+.cwrap{position:absolute;left:50%;top:60%;width:max(100cqw,150cqh);aspect-ratio:3/2;transform:translate(-50%,-60%)}
+.cimg{display:block;width:100%;height:100%;object-fit:fill}
+.walk{left:50%;bottom:21%;height:46%}
+.walk img{height:100%;width:auto}
+.sig{z-index:4}
+.stage-fade{z-index:2}
+
+/* crisper gold on laptops and big screens: stronger colour, heavier rules, no hairlines */
+:root{--gold:#A98A4A;--gold-ink:#6F5827;--soft:#5C564E}
+.label{font-weight:700;font-size:13px;letter-spacing:.22em}
+.rule{gap:12px}
+.rule::before,.rule::after{height:2px;width:84px}
+.rule i{width:8px;height:8px;border-width:2px}
+.tlink{font-weight:700;font-size:12px;border-bottom-width:2px}
+.card{border-width:1.5px}
+.tile{border-width:1.5px}
+.tile span{font-size:11.5px;font-weight:700}
+.vframe{border-width:1.5px}
+form{border-width:1.5px}
+.yn label{border-width:1.5px;font-weight:700}
+.stepper button{border-width:1.5px}
+.ev small{font-size:12px;font-weight:700}
+.deva,.om,.om-top,.shloka{color:var(--gold-ink)}
+.halo .label,.halo .cue{color:#F6E7BC;font-weight:700;text-shadow:0 1px 8px rgba(0,0,0,.75)}
+.halo .deva{color:#F6E7BC;text-shadow:0 1px 8px rgba(0,0,0,.7)}
+.halo .cue::after{background:#F6E7BC;width:2px}
+@media (min-width:1024px){body{-webkit-font-smoothing:auto}}
+
+/* HD photo frames */
+.arches{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,2vw,28px);align-items:start;position:relative;z-index:2}
+.win{position:relative;aspect-ratio:760/1277;margin:0}
+.win:nth-child(even){margin-top:0}
+.win .ph{position:absolute;left:15%;right:15%;top:20%;bottom:5%;border-radius:999px 999px 6px 6px;overflow:hidden}
+.win .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.win .fr{position:absolute;inset:0;width:100%;height:100%;max-width:none;pointer-events:none;filter:drop-shadow(0 10px 14px rgba(70,40,10,.3))}
+@media (max-width:760px){.arches{grid-template-columns:repeat(2,minmax(0,1fr));max-width:440px;margin:0 auto}.win:nth-child(even){margin-top:0}}
+
+/* HD peacocks */
+.peacock{width:clamp(150px,24vw,330px);bottom:-1%;filter:drop-shadow(0 12px 14px rgba(60,40,15,.25));-webkit-mask-image:none;mask-image:none}
+.peacock.l{left:-2%}.peacock.r{right:-2%;transform:scaleX(-1)}
+@media (max-width:760px){.peacock{width:40vw}}
+.walk{height:40%;bottom:25%}
+@media (max-width:760px){.walk{height:33%;bottom:25%}}
+
+.walk{bottom:22%}
+@media (max-width:760px){.walk{bottom:22%}}
+.arches{align-items:start}
+.sig h1.names{margin:0 auto!important;max-width:none;width:100%;text-align:center}
+
+/* v5 round 4: close the empty band above the envelope; the letter still rises over it while opening */
+.gate .env-stage{--ew:min(78vw,460px,calc(42svh*.909));width:var(--ew);margin-top:calc(var(--ew) * -.27);margin-bottom:calc(var(--ew) * -.05)}
+@media (max-width:760px){.gate .env-stage{--ew:min(80vw,380px,calc(38svh*.909))}}
+.vgrid.one{grid-template-columns:minmax(0,420px)}
+
+/* ---------- Event scenes v6: one full-bleed 16:9 painting per event, card on alternating sides (laptop), painting then card (phone) ---------- */
+.sc{position:relative;overflow:hidden;background:var(--paper)}
+.sc-art{position:relative;height:clamp(380px,118vw,640px);container-type:size;overflow:hidden}
+.sc-box{--W:max(100cqw,177.78cqh);position:absolute;top:50%;width:var(--W);aspect-ratio:16/9;transform:translateY(-50%);
+  left:clamp(calc(100cqw - var(--W)),calc(50cqw - var(--fx,.5) * var(--W)),0px)}
+.sc-box .bg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.sc-box .couple{position:absolute;left:calc(var(--cx,.5) * 100%);bottom:var(--cb,10%);height:var(--ch,34%);width:auto;max-width:none;transform:translateX(calc(var(--ax,.5) * -100%));filter:drop-shadow(0 10px 14px rgba(0,0,0,.35));pointer-events:none}
+.sc-art{-webkit-mask-image:linear-gradient(#000 78%,transparent);mask-image:linear-gradient(#000 78%,transparent)}
+.scw{position:relative;z-index:3;margin-top:-64px;padding:0 max(16px,env(safe-area-inset-left,0px)) 56px;display:flex;justify-content:center}
+.sc .card{width:min(430px,100%)}
+@media (min-width:900px){
+  .sc{height:clamp(640px,56.25vw,100svh)}
+  .sc-art{position:absolute;inset:0;height:auto;-webkit-mask-image:none;mask-image:none}
+  .sc::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(var(--paper),rgba(250,246,239,0) 9%,rgba(250,246,239,0) 91%,var(--paper))}
+  .scw{position:absolute;inset:0;margin:0;padding:0 clamp(40px,6.5vw,130px);align-items:center}
+  .sc.cl .scw{justify-content:flex-start}
+  .sc.cr .scw{justify-content:flex-end}
+  .sc .card{width:clamp(340px,28vw,420px)}
+}
+
+/* guest page without the opening hero: countdown follows the gate directly */
+.countdown.first{margin-top:var(--top)}
