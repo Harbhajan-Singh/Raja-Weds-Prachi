@@ -183,6 +183,35 @@ export default function SangeetView() {
             Digital Darzee
           </a>
         </div>
+        <div
+          className="credit"
+          style={{
+            position: "absolute",
+            bottom: "22px",
+            left: "0",
+            right: "0",
+            zIndex: 10,
+            textAlign: "center",
+            fontSize: "13.5px",
+            letterSpacing: "0.04em",
+            color: "var(--soft, #6E5A44)",
+          }}
+        >
+          <span>Design &amp; Developed By </span>
+          <a
+            href="https://digitaldarzee.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: "var(--green, #224229)",
+              fontWeight: 700,
+              textDecoration: "underline",
+              textUnderlineOffset: "3px",
+            }}
+          >
+            Digital Darzee
+          </a>
+        </div>
       </footer>
 
       <Script src="/v5/js/main.js?v=9" strategy="afterInteractive" />
