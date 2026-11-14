@@ -475,19 +475,37 @@ export default function WeddingView() {
             <li>Tandon &amp; Arora Family</li>
           </ul>
         </div>
-        <p className="credit" style={{ margin: "44px auto 0", fontSize: "14px", letterSpacing: "0.06em", color: "var(--soft)", position: "relative", zIndex: 3 }}>
-          Design &amp; Developed By{" "}
+        <img className="peacock l" src="/v5/assets/art/peacock.webp" alt="" />
+        <img className="peacock r" src="/v5/assets/art/peacock.webp" alt="" />
+        <div
+          className="credit"
+          style={{
+            position: "absolute",
+            bottom: "22px",
+            left: "0",
+            right: "0",
+            zIndex: 10,
+            textAlign: "center",
+            fontSize: "13.5px",
+            letterSpacing: "0.04em",
+            color: "var(--soft, #6E5A44)",
+          }}
+        >
+          <span>Design &amp; Developed By </span>
           <a
             href="https://digitaldarzee.com/"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "var(--green)", textDecoration: "none", fontWeight: 700, whiteSpace: "nowrap" }}
+            style={{
+              color: "var(--green, #224229)",
+              fontWeight: 700,
+              textDecoration: "underline",
+              textUnderlineOffset: "3px",
+            }}
           >
-            Digital <span aria-hidden="true" style={{ color: "#D92B3A" }}>❤️</span> Darzee
+            Digital Darzee
           </a>
-        </p>
-        <img className="peacock l" src="/v5/assets/art/peacock.webp" alt="" />
-        <img className="peacock r" src="/v5/assets/art/peacock.webp" alt="" />
+        </div>
       </footer>
 
       <Script src="/v5/js/main.js?v=9" strategy="afterInteractive" />
